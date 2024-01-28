@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+  <h1>Download de Vídeos</h1>
+    <form method="post" action="{{ url_for('download') }}">
+        <label for="url">URL do Vídeo:</label>
+        <input type="text" name="url" required>
+        <button type="submit">Baixar</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+  <h1>Vídeos Baixados</h1>
+    <ul>
+        {% for video in videos %}
+            <li>
+                {{ video }}
+                <a href="{{ url_for('reproduzir_video', video_nome=video) }}" target="_blank">Reproduzir</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
