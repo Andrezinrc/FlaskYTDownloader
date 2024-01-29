@@ -1,12 +1,13 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from pytube import YouTube
 from pySmartDL import SmartDL
 from flask import send_from_directory
 
 app = Flask(__name__)
+app.secret_key = "chave-secreta-aqui"
 
-BASE_DIR = os.path.expanduser("~")
+BASE_DIR = os.path.expanduser("~") #diretorio atual
 DOWNLOAD_FOLDER = os.path.join(BASE_DIR, "videos") #adiciona a pasta videos
 
 # Verifica se a pasta 'videos' existe, se não, cria
@@ -24,8 +25,9 @@ def download():
         
         # Verifique se a URL é válida
         if not url:
+            flash("URL inválida. Por favor, insira uma URL.")
             raise ValueError("URL inválida. Por favor, insira uma URL.")
-
+        
         # Crie um objeto YouTube
         yt = YouTube(url)
 
@@ -38,12 +40,13 @@ def download():
         # Configuração do download com caminho personalizado
         video_dl = SmartDL(video_stream.url, dest=destination_path)
         video_dl.start()
-
+       
+        flash("Download feito com sucesso.")
         return redirect(url_for('index'))
 
     except Exception as e:
-        error_message = f"Erro: {str(e)}"
-        return render_template('error.html', error_message=error_message)
+        flash("Erro ao baixar o vídeo. Por favor, tente novamente.")
+        return render_template('index.html',)
 
 @app.route('/videos_baixados')
 def videos_baixados():
@@ -57,3 +60,4 @@ def reproduzir_video(video_nome):
 
 if __name__ == '__main__':
     app.run(debug=True)
+

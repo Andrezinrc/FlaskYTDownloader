@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-  <h1>Download de Vídeos</h1>
-    <form method="post" action="{{ url_for('download') }}">
-        <label for="url">URL do Vídeo:</label>
-        <input type="text" name="url" required>
-        <button type="submit">Baixar</button>
+    <form class="formulario max-auto p-4" method="post" action="{{ url_for('download') }}">
+        <h1 class="text-center text-light" >Download de Videos YT</h1>
+        <label class="text-light"  for="url">URL do Vídeo:</label>
+        <input class="form-control bg-transparent text-light border-end-0 border-start-0 border-top-0 mb-3"  type="text" name="url" required>
+        <button class="btn btn-block w-100 mb-3 botao"  type="submit">Baixar</button>
+        <div class="text-center md-3">
+          <a class="text-light" href="/videos_baixados">Videos Baixados</a>
+        </div>
+
+        {% with mensagems = get_flashed_messages() %}
+          {% if mensagems %}
+            {% for mensagem in mensagems %}
+              <p class="text-light text-center"> {{ mensagem }} </p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
     </form>
 {% endblock %}
