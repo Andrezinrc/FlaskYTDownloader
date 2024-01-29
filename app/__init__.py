@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from pytube import YouTube
 from pySmartDL import SmartDL
 from flask import send_from_directory
+from flask import jsonify
 
 app = Flask(__name__)
 app.secret_key = "chave-secreta-aqui"
@@ -58,6 +59,11 @@ def reproduzir_video(video_nome):
     #rota para produzir o  video
     return send_from_directory(DOWNLOAD_FOLDER, video_nome)
 
-if __name__ == '__main__':
+@app.route('/progress')
+def progress():
+    progress = 20  #valor de progresso
+    return jsonify({'progress': progress})
+
+if __name__=="__main__":
     app.run(debug=True)
 
